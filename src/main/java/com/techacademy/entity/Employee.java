@@ -55,7 +55,6 @@ public class Employee {
 
     // パスワード
     @Column(length = 255, nullable = false)
-    //@Pattern(regexp = "[a-zA-Z]{8,16}")
     private String password;
 
     // 削除フラグ(論理削除を行うため)

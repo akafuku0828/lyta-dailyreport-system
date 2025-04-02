@@ -36,9 +36,9 @@ public class EmployeeService {
         }
 
         // 従業員番号重複チェック
-        if (findByCode(employee.getCode()) != null) {
+        /*if (findByCode(employee.getCode()) != null ) {
             return ErrorKinds.DUPLICATE_ERROR;
-        }
+        }*/
 
         employee.setDeleteFlg(false);
 
@@ -82,6 +82,11 @@ public class EmployeeService {
 
     // 従業員パスワードチェック
     private ErrorKinds employeePasswordCheck(Employee employee) {
+
+        if (employee.getCode() != null && "".equals(employee.getPassword())) {
+            employee.setPassword(passwordEncoder.encode(findByCode(employee.getCode()).getPassword()));
+            return ErrorKinds.CHECK_OK;
+        }
 
         // 従業員パスワードの半角英数字チェック処理
         if (isHalfSizeCheckError(employee)) {
