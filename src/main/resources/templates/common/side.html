@@ -6,6 +6,9 @@
         <li sec:authorize="hasAuthority('ADMIN')">
             <a class="text-light" th:href="@{/employees}">従業員</a>
         </li>
+        <li sec:authorize="hasAuthority('ADMIN')">
+            <a class="text-light" th:href="@{/reports}">日報</a>
+        </li>
     </ul>
     <form method="post" th:action="@{/logout}">
         <div class="p-1">

@@ -35,15 +35,10 @@ public class EmployeeService {
             return result;
         }
 
-        // 従業員番号重複チェック
-        /*if (findByCode(employee.getCode()) != null ) {
-            return ErrorKinds.DUPLICATE_ERROR;
-        }*/
-
         employee.setDeleteFlg(false);
 
         LocalDateTime now = LocalDateTime.now();
-        employee.setCreatedAt(now);
+        //employee.setCreatedAt(now);
         employee.setUpdatedAt(now);
 
         employeeRepository.save(employee);

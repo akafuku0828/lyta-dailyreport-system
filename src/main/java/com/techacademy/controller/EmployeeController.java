@@ -1,5 +1,7 @@
 package com.techacademy.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -49,18 +51,19 @@ public class EmployeeController {
         return "employees/detail";
     }
 
- // 従業員更新画面
+    // 従業員更新画面
     @GetMapping(value = "/{code}/update")
     public String edit(@PathVariable("code") String code, Model model,@ModelAttribute Employee employee) {
-
         employee.setName(employeeService.findByCode(code).getName());
-        //model.addAttribute("employee", employeeService.findByCode(code));
+        employee.setRole(employeeService.findByCode(code).getRole());
         return "employees/update";
     }
 
     // 従業員更新処理
     @PostMapping(value = "/{code}/update")
     public String update(@Validated Employee employee, BindingResult res, Model model, @PathVariable("code") String code) {
+
+        employee.setCreatedAt(employeeService.findByCode(code).getCreatedAt());
 
         if (res.hasErrors()) {
             return edit(code,model,employee);
@@ -86,6 +89,9 @@ public class EmployeeController {
     // 従業員新規登録処理
     @PostMapping(value = "/add")
     public String add(@Validated Employee employee, BindingResult res, Model model) {
+
+        LocalDateTime now = LocalDateTime.now();
+        employee.setCreatedAt(now);
 
         // パスワード空白チェック
         /*
