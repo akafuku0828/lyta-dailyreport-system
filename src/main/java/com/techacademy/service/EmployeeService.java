@@ -39,10 +39,14 @@ public class EmployeeService {
             return result;
         }
 
+        //従業員コードが空欄でなく、かつパスワードが空欄の場合DBの従業員パスワードをセット
+        if(employee.getCode() != null && "".equals(employee.getPassword())) {
+            employee.setPassword(findByCode(employee.getCode()).getPassword());
+        }
+
         employee.setDeleteFlg(false);
 
         LocalDateTime now = LocalDateTime.now();
-        //employee.setCreatedAt(now);
         employee.setUpdatedAt(now);
 
         employeeRepository.save(employee);
@@ -90,7 +94,7 @@ public class EmployeeService {
     private ErrorKinds employeePasswordCheck(Employee employee) {
 
         if (employee.getCode() != null && "".equals(employee.getPassword())) {
-            employee.setPassword(passwordEncoder.encode(findByCode(employee.getCode()).getPassword()));
+            //employee.setPassword(passwordEncoder.encode(findByCode(employee.getCode()).getPassword()));
             return ErrorKinds.CHECK_OK;
         }
 

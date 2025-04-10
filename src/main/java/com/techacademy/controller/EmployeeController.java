@@ -64,6 +64,7 @@ public class EmployeeController {
     public String update(@Validated Employee employee, BindingResult res, Model model, @PathVariable("code") String code) {
 
         employee.setCreatedAt(employeeService.findByCode(code).getCreatedAt());
+        employee.setCode(employeeService.findByCode(code).getCode());
 
         if (res.hasErrors()) {
             return edit(code,model,employee);
